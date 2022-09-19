@@ -1,18 +1,14 @@
 const mongoose = require("mongoose");
-
 const connectDatabase = () => {
   mongoose
-    .connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnfinishedTopology: true,
-      useCreateIndex: true,
-    })
+    .connect("mongodb://127.0.0.1:27017/ecommerce")
     .then((data) => {
-      console.log(`Mongdb connected with server: ${data.connection.host}`);
+      console.log(`Mongodb connected with server: ${data.connection.host}`);
     })
     .catch((err) => {
       console.log(err);
     });
+  // const db = mongoose.connection;
+  // return db;
 };
-
 module.exports = connectDatabase;
