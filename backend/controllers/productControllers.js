@@ -122,3 +122,56 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
     // message: "",
   });
 });
+
+// ---------------Get All Reviews of a single Product------------
+
+exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product Not Found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
+  });
+});
+
+// ---------------------------Delete Review-----------------------
+exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.params.productId);
+
+  if (!product) {
+    return next(new ErrorHandler("Product Not Found", 404));
+  }
+
+  let avg = 0;
+
+  reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  const ratings = avg / reviews.length;
+
+  const numOfReviews = reviews.length;
+
+  await Product.findByIdAndUpdate(
+    req.query.productId,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    //reviews: product.reviews,
+  });
+});
