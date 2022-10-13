@@ -1,8 +1,6 @@
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-
 const User = require("../models/userModel");
-//const { use } = require("../routes/userRoute");
 const sendToken = require("../utils/JWTToken");
 const sendEmail = require("../utils/sendEmail");
 
@@ -214,5 +212,45 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     user,
+  });
+});
+
+//------Update User Role Admin------
+
+exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  };
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+//------Delete User  Admin------
+
+exports.deleteUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id);
+  //we will remove avatar and other things later
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User does not exist with id: ${req.params.id}`)
+    );
+  }
+
+  await user.remove();
+
+  res.status(200).json({
+    success: true,
+    message: "User deleted successfully",
   });
 });
