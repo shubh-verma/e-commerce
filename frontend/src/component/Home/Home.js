@@ -8,12 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 
-const product = {
-  name: "Blue T-shirt",
-  images: [{ url: "https://i.ibb.co/DRST11n/1.webp" }],
-  price: "Rs.3000",
-  _id: "abhi",
-};
+// const product = {
+//   name: "Blue T-shirt",
+//   images: [{ url: "https://i.ibb.co/DRST11n/1.webp" }],
+//   price: "Rs.3000",
+//   _id: "abhi",
+// };
 
 const Home = () => {
   const alert = useAlert();
