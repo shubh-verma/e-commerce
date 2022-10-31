@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 //const mongoose = require("mongoose");
 const validator = require("validator");
 
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please Enter Your Name"],
-    maxLength: [30, "Name cannot exceed 30 char"],
+    maxLength: [30, "Name cannot exceed 30 characters"],
     minLength: [4, "Name should have more than 4 characters"],
   },
   email: {
@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -66,10 +70,10 @@ userSchema.methods.comparePassword = async function (password) {
 
 //Generating Password reset token
 userSchema.methods.getResetPasswordToken = function () {
-  //generating token
+  //Generating token
   const resetToken = crypto.randomBytes(20).toString("hex");
 
-  //hashing and adding resetPasswordToken to userSchema
+  //Hashing and adding resetPasswordToken to userSchema
   this.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)

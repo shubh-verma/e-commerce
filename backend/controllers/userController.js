@@ -36,7 +36,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("Invalid email or password"), 401);
   }
-  const isPasswordMatched = user.comparePassword(password);
+  const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid email or password"), 401);
   }
@@ -146,7 +146,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
 
-  const isPasswordMatched = await user.comparePassword(req.body.oldpassword);
+  const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
 
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Old Password is incorrect"), 400);
@@ -206,7 +206,7 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new ErrorHandler(`User does not exist with id: ${req.params.id}`)
+      new ErrorHandler(`User does not exist with Id: ${req.params.id}`)
     );
   }
   res.status(200).json({
@@ -243,7 +243,7 @@ exports.deleteUserProfile = catchAsyncErrors(async (req, res, next) => {
 
   if (!user) {
     return next(
-      new ErrorHandler(`User does not exist with id: ${req.params.id}`)
+      new ErrorHandler(`User does not exist with Id: ${req.params.id}`)
     );
   }
 

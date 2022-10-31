@@ -73,7 +73,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Product Not Found", 404));
   }
 
-  await Product.remove();
+  await product.remove();
   res.status(200).json({
     success: true,
     message: "Product deleted successfully",
@@ -117,7 +117,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   product.ratings = avg / product.reviews.length;
 
-  await Product.save({ validateBefore: false });
+  await product.save({ validateBefore: false });
   res.status(200).json({
     success: true,
     // message: "",
@@ -127,7 +127,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 // ---------------Get All Reviews of a single Product------------
 
 exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
-  let product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
@@ -141,7 +141,7 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
 
 // ---------------------------Delete Review-----------------------
 exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
-  let product = await Product.findById(req.params.productId);
+  const product = await Product.findById(req.params.productId);
 
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
