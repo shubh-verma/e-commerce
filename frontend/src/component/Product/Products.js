@@ -4,9 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearErrors, getProduct } from '../../action/productAction';
 import Loader from '../layout/Loader/Loader';
 import ProductCard from '../Home/ProductCard';
+import Pagination from "react-js-pagination";
+
 import { useAlert } from "react-alert";
 const Products = ({ match }) => {
     const dispatch = useDispatch();
+    const [currentPage, setCurrentPage] = useState(1);
     const alert = useAlert();
 
     const {
@@ -19,15 +22,17 @@ const Products = ({ match }) => {
       } = useSelector((state) => state.products);
 
       const keyword = match.params.keyword;
-
+      const setCurrentPageNo = (e) => {
+        setCurrentPage(e);
+      }; 
 
     useEffect(() => {
         if (error) {
           alert.error(error);
           dispatch(clearErrors());
         }
-        dispatch(getProduct(keyword));
-      }, [dispatch, keyword, alert, error]);
+        dispatch(getProduct(keyword, currentPage));
+      }, [dispatch, keyword, currentPage, alert, error]);
   return (
     <Fragment>
         {loading ? <Loader /> : <Fragment>
@@ -36,6 +41,25 @@ const Products = ({ match }) => {
                 {products && products.map((product) => (
                 <ProductCard key={product._id} product={product} />))}
             </div>
+
+            {resultPerPage < productsCount && (
+              <div className="paginationBox">
+              <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={resultPerPage}
+                totalItemsCount={productsCount}
+                onChange={setCurrentPageNo}
+                nextPageText="Next"
+                prevPageText="Prev"
+                firstPageText="1st"
+                lastPageText="Last"
+                itemClass="page-item"
+                linkClass="page-link"
+                activeClass="pageItemActive"
+                activeLinkClass="pageLinkActive"
+              />
+            </div>
+            )}
         </Fragment>}
     </Fragment>
   )
