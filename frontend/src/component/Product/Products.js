@@ -9,12 +9,22 @@ import Slider from "@material-ui/core/Slider";
 import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 
+const categories = [
+  "Laptop",
+  "Footwear",
+  "Bottom",
+  "Tops",
+  "Attire",
+  "Camera",
+  "SmartPhones",
+];
 const Products = ({ match }) => {
   const dispatch = useDispatch();
+  const alert = useAlert();
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([0, 25000]);
-  //const [category, setCategory] = useState("");
-  const alert = useAlert();
+  const [category, setCategory] = useState("");
+  const [ratings, setRatings] = useState(0);
 
   const {
     products,
@@ -39,8 +49,11 @@ const Products = ({ match }) => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getProduct(keyword, currentPage, price));
-  }, [dispatch, keyword, currentPage, alert, error, price]);
+    dispatch(getProduct(keyword, currentPage, price, category, ratings));
+  }, [dispatch, keyword, currentPage, alert, error, price, category, ratings]);
+
+  let count = filteredProductsCount;
+
   return (
     <Fragment>
       {loading ? (
@@ -94,7 +107,7 @@ const Products = ({ match }) => {
             </fieldset>
           </div>
 
-          {resultPerPage < productsCount && (
+          {resultPerPage < count && (
             <div className="paginationBox">
               <Pagination
                 activePage={currentPage}
