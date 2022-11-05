@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useRef, useState, useEffect } from "react";
 import "./LogInSignUp.css";
 import Loader from "../layout/Loader/Loader";
 import { Link } from "react-router-dom";
@@ -70,6 +70,7 @@ const LogInSignUp = ({ history, location }) => {
   };
 
   const redirect = location.search ? location.search.split("=")[1] : "/account";
+  //const redirect = "/account";
 
   useEffect(() => {
     if (error) {
