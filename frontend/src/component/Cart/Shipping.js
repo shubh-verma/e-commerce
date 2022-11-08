@@ -11,9 +11,10 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import TransferWithinAStationIcon from "@material-ui/icons/TransferWithinAStation";
 import { Country, State } from "country-state-city";
 import { useAlert } from "react-alert";
-import { Navigate } from "react-router-dom";
+//import { Navigate } from "react-router-dom";
+import CheckoutSteps from "../Cart/CheckoutSteps.js";
 
-const Shipping = () => {
+const Shipping = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const [shippingInfo] = useSelector((state) => state.cart);
@@ -35,12 +36,15 @@ const Shipping = () => {
     dispatch(
       saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
     );
-    Navigate("/order/confirm");
+    history.push("/order/confirm");
   };
 
   return (
     <Fragment>
       <MetaData title="Shipping Details" />
+
+      <CheckoutSteps activeStep={0} />
+
       <div className="shippingContainer">
         <div className="shippingBox">
           <h2 className="shippingHeading">Shipping Details</h2>
