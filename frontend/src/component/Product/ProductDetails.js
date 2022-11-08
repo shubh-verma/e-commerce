@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,6 +23,24 @@ const ProductDetails = ({ match }) => {
     }
     dispatch(getProductDetails(match.params.id));
   }, [dispatch, match.params.id, error, alert]);
+
+  const [quantity, setQuantity] = useState(1);
+
+  const increaseQuantity = () => {
+    if (product.Stock <= quantity) {
+      return;
+    }
+    const qty = quantity + 1;
+    setQuantity(qty);
+  };
+
+  const decreaseQuantity = () => {
+    if (1 >= quantity) {
+      return;
+    }
+    const qty = quantity - 1;
+    setQuantity(qty);
+  };
 
   const options = {
     edit: false,
@@ -71,9 +89,9 @@ const ProductDetails = ({ match }) => {
                 <h1>{`₹${product.price}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
-                    <button onClick="">-</button>
+                    <button onClick="decreaseQuantity">-</button>
                     <input readOnly type="number" value="" />
-                    <button onClick="">+</button>
+                    <button onClick="increaseQuantity">+</button>
                   </div>
                   <button
                     disabled={product.Stock < 1 ? true : false}
