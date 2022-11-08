@@ -8,6 +8,7 @@ import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
+import { addItemsToCart } from "../../action/cartAction";
 
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
@@ -16,16 +17,7 @@ const ProductDetails = ({ match }) => {
     (state) => state.productDetails
   );
 
-  useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-    dispatch(getProductDetails(match.params.id));
-  }, [dispatch, match.params.id, error, alert]);
-
   const [quantity, setQuantity] = useState(1);
-
   const increaseQuantity = () => {
     if (product.Stock <= quantity) {
       return;
@@ -41,6 +33,19 @@ const ProductDetails = ({ match }) => {
     const qty = quantity - 1;
     setQuantity(qty);
   };
+
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(match.params.id, quantity));
+    alert.success("Item added successfully");
+  };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getProductDetails(match.params.id));
+  }, [dispatch, match.params.id, error, alert]);
 
   const options = {
     edit: false,
@@ -89,13 +94,13 @@ const ProductDetails = ({ match }) => {
                 <h1>{`₹${product.price}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
-                    <button onClick="decreaseQuantity">-</button>
+                    <button onClick={decreaseQuantity}>-</button>
                     <input readOnly type="number" value="" />
-                    <button onClick="increaseQuantity">+</button>
+                    <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
                     disabled={product.Stock < 1 ? true : false}
-                    onClick=""
+                    onClick={addToCartHandler}
                   >
                     Add to Cart
                   </button>
