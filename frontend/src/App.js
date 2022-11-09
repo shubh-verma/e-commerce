@@ -61,13 +61,7 @@ function App() {
         <Route exact path="/products" element={<Products />} />
         <Route path="/products/:keyword" element={<Products />} />
         <Route exact path="/search" element={<Search />} />
-        <ProtectedRoute exact path="/account" element={<Profile />} />
-        <ProtectedRoute exact path="/me/update" element={<UpdateProfile />} />
-        <ProtectedRoute
-          exact
-          path="/password/update"
-          element={<UpdatePassword />}
-        />
+
         <Route exact path="/password/forgot" element={<ForgotPassword />} />
         <Route
           exact
@@ -76,25 +70,24 @@ function App() {
         />
         <Route exact path="/login" element={<LogInSignUp />} />
         <Route exact path="/cart" element={<Cart />} />
-        <ProtectedRoute exact path="/shipping" element={<Shipping />} />
-        <ProtectedRoute
-          exact
-          path="/order/confirm"
-          element={<ConfirmOrder />}
-        />
-        {stripeApiKey && (
-          <Element stripe={loadStripe(setStripeApiKey)}>
-            <ProtectedRoute
-              exact
-              path="/process/payment"
-              element={<Payment />}
-            />
-          </Element>
-        )}
-        <ProtectedRoute exact path="/success" element={<OrderSuccess />} />
-        <ProtectedRoute exact path="/orders" element={<MyOrders />} />
-        <ProtectedRoute exact path="/order/:id" element={<OrderDetails />} />
       </Routes>
+      <ProtectedRoute exact path="/shipping" element={<Shipping />} />
+      <ProtectedRoute exact path="/order/confirm" element={<ConfirmOrder />} />
+      {stripeApiKey && (
+        <Element stripe={loadStripe(setStripeApiKey)}>
+          <ProtectedRoute exact path="/process/payment" element={<Payment />} />
+        </Element>
+      )}
+      <ProtectedRoute exact path="/account" element={<Profile />} />
+      <ProtectedRoute exact path="/me/update" element={<UpdateProfile />} />
+      <ProtectedRoute
+        exact
+        path="/password/update"
+        element={<UpdatePassword />}
+      />
+      <ProtectedRoute exact path="/success" element={<OrderSuccess />} />
+      <ProtectedRoute exact path="/orders" element={<MyOrders />} />
+      <ProtectedRoute exact path="/order/:id" element={<OrderDetails />} />
 
       <Footer />
     </Router>
