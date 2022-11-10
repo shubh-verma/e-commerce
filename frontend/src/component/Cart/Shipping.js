@@ -17,7 +17,7 @@ import CheckoutSteps from "../Cart/CheckoutSteps.js";
 const Shipping = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const [shippingInfo] = useSelector((state) => state.cart);
+  const { shippingInfo } = useSelector((state) => state.cart);
 
   const [address, setAddress] = useState(shippingInfo.address);
   const [city, setCity] = useState(shippingInfo.city);
