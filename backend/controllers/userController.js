@@ -10,7 +10,7 @@ const cloudinary = require("cloudinary");
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: "avatar",
+    folder: "avatars",
     width: 150,
     crop: "scale",
   });
@@ -38,7 +38,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   if (!email || !password) {
     return next(new ErrorHandler("Please Enter Email & Password", 400));
   }
-  const user = await User.findOne({ email: email }).select("+password");
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
     return next(new ErrorHandler("Invalid email or password"), 401);
@@ -261,12 +261,12 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 //------Delete User  Admin------
 
 exports.deleteUserProfile = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id);
+  const user = await User.findById(req.params.id);
   //we will remove avatar and other things later
 
   if (!user) {
     return next(
-      new ErrorHandler(`User does not exist with Id: ${req.params.id}`)
+      new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 400)
     );
   }
 

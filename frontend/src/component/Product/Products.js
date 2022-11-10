@@ -45,6 +45,8 @@ const Products = ({ match }) => {
     setPrice(newPrice);
   };
 
+  let count = filteredProductsCount;
+
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -52,8 +54,6 @@ const Products = ({ match }) => {
     }
     dispatch(getProduct(keyword, currentPage, price, category, ratings));
   }, [dispatch, keyword, currentPage, alert, error, price, category, ratings]);
-
-  let count = filteredProductsCount;
 
   return (
     <Fragment>

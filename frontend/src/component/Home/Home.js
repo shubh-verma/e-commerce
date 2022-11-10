@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { CgMouse } from "react-icons/cg";
 import "./Home.css";
-import Product from "./ProductCard";
+import ProductCard from "./ProductCard";
 import MetaData from "../layout/MetaData";
 import { clearErrors, getProduct } from "../../action/productAction";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ import { useAlert } from "react-alert";
 //   name: "Blue T-shirt",
 //   images: [{ url: "https://i.ibb.co/DRST11n/1.webp" }],
 //   price: "Rs.3000",
-//   _id: "abhi",
+//   _id: "shubh",
 // };
 
 const Home = () => {
@@ -50,8 +50,8 @@ const Home = () => {
           <div className="container" id="container">
             {products &&
               products.map((product) => (
-                //<ProductCard key={product._id} product={product} />
-                <Product product={product} />
+                <ProductCard key={product._id} product={product} />
+                //<Product product={product} />
               ))}
           </div>
         </Fragment>
