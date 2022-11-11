@@ -4,14 +4,35 @@ import "./Dashboard.css";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Doughnut, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  PointElement,
+  LinearScale,
+  LineElement,
+} from "chart.js";
 
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement
+);
 const Dashboard = () => {
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
+    type: "line",
     datasets: [
       {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
+        fill: true,
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
         data: [0, 4000],
       },
@@ -24,6 +45,7 @@ const Dashboard = () => {
       {
         backgroundColor: ["#00A6B4", "#6800B4"],
         hoverBackgroundColor: ["#4B5000", "#35014F"],
+        data: [2, 10],
       },
     ],
   };
