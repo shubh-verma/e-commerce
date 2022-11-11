@@ -29,6 +29,7 @@ import ConfirmOrder from "./component/Cart/ConfirmOrder.js";
 import OrderSuccess from "./component/Cart/OrderSuccess.js";
 import MyOrders from "./component/Orders/MyOrders.js";
 import OrderDetails from "./component/Orders/OrderDetails.js";
+import Dashboard from "./component/Admin/Dashboard.js";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -90,6 +91,7 @@ function App() {
       <ProtectedRoute exact path="/success" element={<OrderSuccess />} />
       <ProtectedRoute exact path="/orders" element={<MyOrders />} />
       <ProtectedRoute exact path="/order/:id" element={<OrderDetails />} />
+      <ProtectedRoute exact path="/admin/dashboard" element={<Dashboard />} />
 
       <Footer />
     </Router>
