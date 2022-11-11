@@ -14,7 +14,8 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     product,
   });
 });
-//Get All Products
+
+//----------------Get All Products------------------------
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
@@ -34,10 +35,20 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
     products,
     productsCount,
     resultPerPage,
+    filteredProductsCount,
   });
 });
 
-// Get Product Details
+//----------------Get All Products  -  Admin-------------------------
+exports.getAdminProducts = catchAsyncErrors(async (req, res) => {
+  const products = await Product.find();
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
+// -----------------Get Product Details------------------------
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
@@ -51,7 +62,7 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Update Product  - Admin
+// ------------------Update Product  - Admin------------------
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);
 
@@ -70,7 +81,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Delete Product  - Admin
+// ------------------Delete Product  - Admin--------------------
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
