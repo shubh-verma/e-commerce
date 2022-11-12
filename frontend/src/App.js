@@ -38,6 +38,9 @@ import ProcessOrder from "./component/Admin/ProcessOrder.js";
 import UsersList from "./component/Admin/UsersList.js";
 import UpdateUser from "./component/Admin/UpdateUser.js";
 import ProductReviews from "./component/Admin/ProductReviews.js";
+import NotFound from "./component/layout/Not Found/NotFound";
+import Contact from "./component/layout/Contact/Contact";
+import About from "./component/layout/About/About";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -60,6 +63,8 @@ function App() {
     //getStripeApiKey();
   }, []);
 
+  //window.addEventListener("contextmenu", (e) => e.preventDefault());
+
   return (
     <Router>
       <Header />
@@ -77,6 +82,8 @@ function App() {
         <Route exact path="/products" element={<Products />} />
         <Route path="/products/:keyword" element={<Products />} />
         <Route exact path="/search" element={<Search />} />
+        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/about" component={<About />} />
 
         <Route exact path="/password/forgot" element={<ForgotPassword />} />
         <Route
@@ -153,6 +160,16 @@ function App() {
         path="/admin/reviews"
         element={<ProductReviews />}
       />
+      <Routes>
+        <Route
+          element={
+            // eslint-disable-next-line no-undef
+            window.location.pathname === "/process/payment" ? null : (
+              <NotFound />
+            )
+          }
+        />
+      </Routes>
 
       <Footer />
     </Router>
