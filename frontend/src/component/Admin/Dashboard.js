@@ -16,6 +16,7 @@ import {
   LinearScale,
   LineElement,
 } from "chart.js";
+import { getAllOrders } from "../../action/orderAction.js";
 
 ChartJS.register(
   ArcElement,
@@ -29,6 +30,7 @@ ChartJS.register(
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+  const { orders } = useSelector((state) => state.allOrders);
 
   let outOfStock = 0;
 
@@ -41,6 +43,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAdminProduct());
+    dispatch(getAllOrders());
   }, [dispatch]);
 
   const lineState = {
@@ -86,7 +89,7 @@ const Dashboard = () => {
             </Link>
             <Link to="/admin/orders">
               <p>Orders</p>
-              <p>4</p>
+              <p>{orders && orders.length}</p>
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
