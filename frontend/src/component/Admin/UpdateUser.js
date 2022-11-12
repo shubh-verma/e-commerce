@@ -12,7 +12,7 @@ import {
   getUserDetails,
   updateUser,
   clearErrors,
-} from "../../actions/userAction";
+} from "../../action/userAction";
 import Loader from "../layout/Loader/Loader";
 
 const UpdateUser = ({ history, match }) => {
@@ -132,4 +132,4 @@ const UpdateUser = ({ history, match }) => {
   );
 };
 
-export default UpdateUser; 
+export default UpdateUser;
