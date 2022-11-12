@@ -18,6 +18,7 @@ import {
 } from "chart.js";
 import { getAllOrders } from "../../action/orderAction.js";
 import { getAllUsers } from "../../action/userAction.js";
+import MetaData from "../layout/MetaData";
 
 ChartJS.register(
   ArcElement,
@@ -49,6 +50,12 @@ const Dashboard = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
+  let totalAmount = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
+
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     type: "line",
@@ -76,13 +83,14 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+      <MetaData title="Dashboard - Admin Panel" />
       <Sidebar />
       <div className="dashboardContainer">
         <Typography component="h1">Dashboard</Typography>
         <div className="dashboardSummary">
           <div>
             <p>
-              Total Amount <br /> ₹2000
+              Total Amount <br /> ₹{totalAmount}
             </p>
           </div>
           <div className="dashboardSummaryBox2">
