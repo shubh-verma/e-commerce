@@ -24,7 +24,7 @@ const About = () => {
             />
             <Typography>Shubham Verma</Typography>
             <Button onClick={visitLinkedIn} color="primary">
-              Visit Instagram
+              Visit LinkedIn
             </Button>
             <span>
               This is a sample wesbite made by Shubham Verma. Only with the
@@ -34,7 +34,7 @@ const About = () => {
           <div className="aboutSectionContainer2">
             <Typography component="h2">Please Visit</Typography>
             <a href="https://github.com/shubh-verma/" target="blank">
-              <GitHubIcon className="youtubeSvgIcon" />
+              <GitHubIcon className="githubSvgIcon" />
             </a>
             <a
               href="https://www.linkedin.com/in/shubham-verma-cs/"
