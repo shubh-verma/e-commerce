@@ -10,7 +10,7 @@ const NotFound = () => {
       <ErrorIcon />
       <Typography>Page Not Found</Typography>
       <Link to="/">
-        <Typography>Go Home</Typography>
+        <Typography variant="h5">Go Home</Typography>
       </Link>
     </div>
   );

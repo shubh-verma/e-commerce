@@ -14,10 +14,12 @@ import {
   clearErrors,
 } from "../../action/userAction";
 import Loader from "../layout/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
-const UpdateUser = ({ history, match }) => {
+const UpdateUser = ({ match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate();
 
   const { loading, error, user } = useSelector((state) => state.userDetails);
 
@@ -53,10 +55,10 @@ const UpdateUser = ({ history, match }) => {
 
     if (isUpdated) {
       alert.success("User Updated Successfully");
-      history.push("/admin/users");
+      navigate("/admin/users");
       dispatch({ type: UPDATE_USER_RESET });
     }
-  }, [dispatch, alert, error, history, isUpdated, updateError, user, userId]);
+  }, [dispatch, alert, error, navigate, isUpdated, updateError, user, userId]);
 
   const updateUserSubmitHandler = (e) => {
     e.preventDefault();

@@ -84,7 +84,16 @@ function App() {
         <Route exact path="/search" element={<Search />} />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/about" element={<About />} />
+      </Routes>
 
+      <ProtectedRoute exact path="/account" element={<Profile />} />
+      <ProtectedRoute exact path="/me/update" element={<UpdateProfile />} />
+      <ProtectedRoute
+        exact
+        path="/password/update"
+        element={<UpdatePassword />}
+      />
+      <Routes>
         <Route exact path="/password/forgot" element={<ForgotPassword />} />
         <Route
           exact
@@ -95,16 +104,9 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
       </Routes>
       <ProtectedRoute exact path="/shipping" element={<Shipping />} />
-      <ProtectedRoute exact path="/order/confirm" element={<ConfirmOrder />} />
-      <ProtectedRoute exact path="/account" element={<Profile />} />
-      <ProtectedRoute exact path="/me/update" element={<UpdateProfile />} />
-      <ProtectedRoute
-        exact
-        path="/password/update"
-        element={<UpdatePassword />}
-      />
       <ProtectedRoute exact path="/success" element={<OrderSuccess />} />
       <ProtectedRoute exact path="/orders" element={<MyOrders />} />
+      <ProtectedRoute exact path="/order/confirm" element={<ConfirmOrder />} />
       <ProtectedRoute exact path="/order/:id" element={<OrderDetails />} />
       <ProtectedRoute
         isAdmin={true}
@@ -162,8 +164,8 @@ function App() {
       />
       <Routes>
         <Route
+          path="*"
           element={
-            // eslint-disable-next-line no-undef
             window.location.pathname === "/process/payment" ? null : (
               <NotFound />
             )
