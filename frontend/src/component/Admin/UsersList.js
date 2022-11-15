@@ -11,12 +11,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import SideBar from "./Sidebar";
 import { getAllUsers, clearErrors, deleteUser } from "../../action/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstants";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
-const UsersList = () => {
+const UsersList = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const { error, users } = useSelector((state) => state.allUsers);
 
@@ -43,12 +43,12 @@ const UsersList = () => {
 
     if (isDeleted) {
       alert.success(message);
-      navigate("/admin/users");
+      history.push("/admin/users");
       dispatch({ type: DELETE_USER_RESET });
     }
 
     dispatch(getAllUsers());
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
+  }, [dispatch, alert, error, deleteError, history, isDeleted, message]);
 
   const columns = [
     { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },

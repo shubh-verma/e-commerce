@@ -1,8 +1,8 @@
 import "./App.css";
-import Header from "./component/layout/Header/Header.js";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import WebFont from "webfontloader";
 import React, { useEffect, useState } from "react";
+import Header from "./component/layout/Header/Header.js";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import WebFont from "webfontloader";
 import Footer from "./component/layout/Footer/Footer.js";
 import Home from "./component/Home/Home.js";
 import ProductDetails from "./component/Product/ProductDetails.js";
@@ -76,7 +76,7 @@ function App() {
         </Elements>
       )} */}
 
-      <Routes>
+      <Switch>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/product/:id" element={<ProductDetails />} />
         <Route exact path="/products" element={<Products />} />
@@ -84,16 +84,14 @@ function App() {
         <Route exact path="/search" element={<Search />} />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/about" element={<About />} />
-      </Routes>
 
-      <ProtectedRoute exact path="/account" element={<Profile />} />
-      <ProtectedRoute exact path="/me/update" element={<UpdateProfile />} />
-      <ProtectedRoute
-        exact
-        path="/password/update"
-        element={<UpdatePassword />}
-      />
-      <Routes>
+        <ProtectedRoute exact path="/account" element={<Profile />} />
+        <ProtectedRoute exact path="/me/update" element={<UpdateProfile />} />
+        <ProtectedRoute
+          exact
+          path="/password/update"
+          element={<UpdatePassword />}
+        />
         <Route exact path="/password/forgot" element={<ForgotPassword />} />
         <Route
           exact
@@ -102,67 +100,69 @@ function App() {
         />
         <Route exact path="/login" element={<LogInSignUp />} />
         <Route exact path="/cart" element={<Cart />} />
-      </Routes>
-      <ProtectedRoute exact path="/shipping" element={<Shipping />} />
-      <ProtectedRoute exact path="/success" element={<OrderSuccess />} />
-      <ProtectedRoute exact path="/orders" element={<MyOrders />} />
-      <ProtectedRoute exact path="/order/confirm" element={<ConfirmOrder />} />
-      <ProtectedRoute exact path="/order/:id" element={<OrderDetails />} />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/dashboard"
-        element={<Dashboard />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/products"
-        element={<ProductList />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/product"
-        element={<NewProduct />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/product/:id"
-        element={<UpdateProduct />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/orders"
-        element={<OrderList />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/order/:id"
-        element={<ProcessOrder />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/users"
-        element={<UsersList />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/user/:id"
-        element={<UpdateUser />}
-      />
-      <ProtectedRoute
-        isAdmin={true}
-        exact
-        path="/admin/reviews"
-        element={<ProductReviews />}
-      />
-      <Routes>
+        <ProtectedRoute exact path="/shipping" element={<Shipping />} />
+        <ProtectedRoute exact path="/success" element={<OrderSuccess />} />
+        <ProtectedRoute exact path="/orders" element={<MyOrders />} />
+        <ProtectedRoute
+          exact
+          path="/order/confirm"
+          element={<ConfirmOrder />}
+        />
+        <ProtectedRoute exact path="/order/:id" element={<OrderDetails />} />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/dashboard"
+          element={<Dashboard />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/products"
+          element={<ProductList />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/product"
+          element={<NewProduct />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/product/:id"
+          element={<UpdateProduct />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/orders"
+          element={<OrderList />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/order/:id"
+          element={<ProcessOrder />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/users"
+          element={<UsersList />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/user/:id"
+          element={<UpdateUser />}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/reviews"
+          element={<ProductReviews />}
+        />
         <Route
           path="*"
           element={
@@ -171,7 +171,7 @@ function App() {
             )
           }
         />
-      </Routes>
+      </Switch>
 
       <Footer />
     </Router>

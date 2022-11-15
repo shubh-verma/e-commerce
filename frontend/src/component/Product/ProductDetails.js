@@ -30,6 +30,17 @@ const ProductDetails = ({ match }) => {
     (state) => state.productDetails
   );
 
+  const { success, error: reviewError } = useSelector(
+    (state) => state.newReview
+  );
+
+  const options = {
+    size: "large",
+    value: product.ratings,
+    readOnly: true,
+    precision: 0.5,
+  };
+
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -49,10 +60,6 @@ const ProductDetails = ({ match }) => {
     const qty = quantity - 1;
     setQuantity(qty);
   };
-
-  const { success, error: reviewError } = useSelector(
-    (state) => state.newReview
-  );
 
   const submitReviewToggle = () => {
     open ? setOpen(false) : setOpen(true);
@@ -92,13 +99,6 @@ const ProductDetails = ({ match }) => {
     dispatch(getProductDetails(match.params.id));
   }, [dispatch, match.params.id, error, alert, reviewError, success]);
 
-  const options = {
-    size: "large",
-    value: product.ratings,
-    readOnly: true,
-    precision: 0.5,
-  };
-
   return (
     <Fragment>
       {loading ? (
@@ -113,7 +113,7 @@ const ProductDetails = ({ match }) => {
                   product.images.map((item, i) => (
                     <img
                       className="CarouselImage"
-                      key={item.url}
+                      key={i}
                       src={item.url}
                       alt={`${i} Slide`}
                     />
@@ -138,7 +138,7 @@ const ProductDetails = ({ match }) => {
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
-                    <input readOnly type="number" value="" />
+                    <input readOnly type="number" value={quantity} />
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button

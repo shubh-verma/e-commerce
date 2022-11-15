@@ -15,11 +15,11 @@ import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import SideBar from "./Sidebar";
 import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
-import { useNavigate } from "react-router-dom";
-const UpdateProduct = ({ match }) => {
+//import { useNavigate } from "react-router-dom";
+const UpdateProduct = ({ history, match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const { error, product } = useSelector((state) => state.productDetails);
 
@@ -73,14 +73,14 @@ const UpdateProduct = ({ match }) => {
 
     if (isUpdated) {
       alert.success("Product Updated Successfully");
-      navigate("/admin/products");
+      history.push("/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [
     dispatch,
     alert,
     error,
-    navigate,
+    history,
     isUpdated,
     productId,
     product,

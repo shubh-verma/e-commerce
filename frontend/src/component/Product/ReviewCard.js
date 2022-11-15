@@ -4,8 +4,8 @@ import profilePng from "../../images/Profile.png";
 
 const ReviewCard = ({ review }) => {
   const options = {
-    size: "large",
-    value: review.ratings,
+    //size: "large",
+    value: review.rating,
     readOnly: true,
     precision: 0.5,
   };

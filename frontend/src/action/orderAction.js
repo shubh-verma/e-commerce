@@ -44,7 +44,7 @@ export const createOrder = (order) => async (dispatch) => {
 };
 
 // My Orders (Placed Orders by the User)
-export const myOrders = (order) => async (dispatch) => {
+export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDERS_REQUEST });
 
@@ -123,7 +123,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
 
     const { data } = await axios.get(`/api/v1/order/${id}`);
 
-    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.orders });
+    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,

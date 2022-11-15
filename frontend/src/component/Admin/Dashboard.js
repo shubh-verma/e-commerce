@@ -65,7 +65,7 @@ const Dashboard = () => {
         backgroundColor: ["tomato"],
         fill: true,
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   };

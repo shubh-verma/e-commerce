@@ -11,14 +11,14 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import TransferWithinAStationIcon from "@material-ui/icons/TransferWithinAStation";
 import { Country, State } from "country-state-city";
 import { useAlert } from "react-alert";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "../Cart/CheckoutSteps.js";
 
-const Shipping = () => {
+const Shipping = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { shippingInfo } = useSelector((state) => state.cart);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const [address, setAddress] = useState(shippingInfo.address);
   const [city, setCity] = useState(shippingInfo.city);
@@ -37,7 +37,7 @@ const Shipping = () => {
     dispatch(
       saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
     );
-    navigate("/order/confirm");
+    history.push("/order/confirm");
   };
 
   return (

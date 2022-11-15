@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
 import "./LogInSignUp.css";
 import Loader from "../layout/Loader/Loader";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../action/userAction";
 import { useAlert } from "react-alert";
 
-const LogInSignUp = () => {
+const LogInSignUp = ({ history, location }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -17,8 +17,8 @@ const LogInSignUp = () => {
     (state) => state.user
   );
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  // const location = useLocation();
+  // const navigate = useNavigate();
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -82,9 +82,9 @@ const LogInSignUp = () => {
     }
 
     if (isAuthenticated) {
-      navigate(redirect);
+      history.push(redirect);
     }
-  }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);
+  }, [dispatch, error, alert, history, isAuthenticated, redirect]);
   const switchTabs = (e, tab) => {
     if (tab === "login") {
       switcherTab.current.classList.add("shiftToNeutral");
