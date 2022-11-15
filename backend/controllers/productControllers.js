@@ -28,7 +28,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   }
 
   req.body.images = imagesLinks;
-  req.body.user = req.user.id;
+  // req.body.user = req.user.id;
   req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
@@ -40,7 +40,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 //----------------Get All Products------------------------
-exports.getAllProducts = catchAsyncErrors(async (req, res) => {
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
   const apiFeature = new ApiFeatures(Product.find(), req.query)
@@ -64,7 +64,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
 });
 
 //----------------Get All Products  -  Admin-------------------------
-exports.getAdminProducts = catchAsyncErrors(async (req, res) => {
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
   res.status(200).json({
     success: true,
@@ -162,7 +162,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
 
   const review = {
-    user: req.body._id,
+    user: req.user._id,
     name: req.user.name,
     rating: Number(rating),
     comment,
@@ -193,7 +193,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   product.ratings = avg / product.reviews.length;
 
-  await product.save({ validateBefore: false });
+  await product.save({ validateBeforeSave: false });
   res.status(200).json({
     success: true,
     // message: "",
@@ -203,7 +203,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 // ---------------Get All Reviews of a single Product------------
 
 exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.query.id);
 
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
@@ -217,7 +217,7 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
 
 // ---------------------------Delete Review-----------------------
 exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.findById(req.params.productId);
+  const product = await Product.findById(req.query.productId);
 
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
