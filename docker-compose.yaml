@@ -19,9 +19,11 @@ services:
 
   frontend:
     image: ghcr.io/shubh-verma/e-commerce-fe:latest
-    build: .
     restart: always
     container_name: frontend
+    build:
+      context: frontend
+      dockerfile: ./Dockerfile
     # ports:
     #   - 80:80
     labels:
