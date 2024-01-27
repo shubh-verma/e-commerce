@@ -6,5 +6,79 @@ services:
     build: .
     restart: always
     container_name: backend
+    # ports:
+    #   - 4000:4000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.shubhamverma.xyz`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.routers.backend-plain.entrypoints=web"
+      - "traefik.http.routers.backend-plain.rule=Host(`api.shubhamverma.xyz`)"
+      - "traefik.http.routers.backend-plain.middlewares=redirect-https"
+
+  frontend:
+    image: ghcr.io/shubh-verma/e-commerce-fe:latest
+    build: .
+    restart: always
+    container_name: frontend
+    # ports:
+    #   - 80:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`dev.shubhamverma.xyz`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
+      - "traefik.http.routers.frontend-plain.entrypoints=web"
+      - "traefik.http.routers.frontend-plain.rule=Host(`dev.shubhamverma.xyz`)"
+      - "traefik.http.routers.frontend-plain.middlewares=redirect-https"
+
+  whoami:
+    image: "traefik/whoami"
+    restart: always
+    container_name: "whoami"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whomai.shubhamverma.xyz`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.whoami-plain.entrypoints=web"
+      - "traefik.http.routers.whoami-plain.rule=Host(`whomai.shubhamverma.xyz`)"
+      - "traefik.http.routers.whoami-plain.middlewares=redirect-https"
+
+  traefik:
+    image: "traefik:v2.11"
+    container_name: "traefik"
+    restart: always
+    command:
+      - "--api.insecure=false"
+      - "--api.dashboard=true"
+      - "--providers.file.filename=/dynamic.yml"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=cannonkalra@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-https.redirectScheme.scheme=https"
+      - "traefik.http.middlewares.redirect-https.redirectScheme.permanent=true"
+      - "traefik.http.routers.dashboard-plain.entrypoints=web"
+      - "traefik.http.routers.dashboard-plain.rule=Host(`console.cannonkalra.in`)"
+      - "traefik.http.routers.dashboard-plain.middlewares=redirect-https"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
+      - "traefik.http.routers.dashboard.rule=Host(`console.cannonkalra.in`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=user:$$2y$$05$$ZnBbcrePgQcW/RiBvA1L5uynPYfetPcST6acGhBPozgHEWJsBzaBW"
     ports:
-      - 4000:4000
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./traefik/letsencrypt:/letsencrypt"
+      - "./traefik/dynamic.yml:/dynamic.yml:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
