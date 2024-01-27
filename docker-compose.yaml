@@ -41,11 +41,11 @@ services:
     container_name: "whoami"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`whomai.shubhamverma.xyz`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.shubhamverma.xyz`)"
       - "traefik.http.routers.whoami.entrypoints=websecure"
       - "traefik.http.routers.whoami.tls.certresolver=myresolver"
       - "traefik.http.routers.whoami-plain.entrypoints=web"
-      - "traefik.http.routers.whoami-plain.rule=Host(`whomai.shubhamverma.xyz`)"
+      - "traefik.http.routers.whoami-plain.rule=Host(`whoami.shubhamverma.xyz`)"
       - "traefik.http.routers.whoami-plain.middlewares=redirect-https"
 
   traefik:
@@ -69,11 +69,11 @@ services:
       - "traefik.http.middlewares.redirect-https.redirectScheme.scheme=https"
       - "traefik.http.middlewares.redirect-https.redirectScheme.permanent=true"
       - "traefik.http.routers.dashboard-plain.entrypoints=web"
-      - "traefik.http.routers.dashboard-plain.rule=Host(`console.shubhmaverma.xyz`)"
+      - "traefik.http.routers.dashboard-plain.rule=Host(`console.shubhamverma.xyz`)"
       - "traefik.http.routers.dashboard-plain.middlewares=redirect-https"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
-      - "traefik.http.routers.dashboard.rule=Host(`console.shubhmaverma.xyz`)"
+      - "traefik.http.routers.dashboard.rule=Host(`console.shubhamverma.xyz`)"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.users=user:$$2y$$05$$ZnBbcrePgQcW/RiBvA1L5uynPYfetPcST6acGhBPozgHEWJsBzaBW"
